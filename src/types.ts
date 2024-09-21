@@ -5,6 +5,7 @@ export const TYPES = {
 	ConfigService: Symbol.for('ConfigService'),
 	PrismaClient: Symbol.for('PrismaClient'),
 	PrismaService: Symbol.for('PrismaService'),
+	RedisService: Symbol.for('RedisService'),
 
 	UserController: Symbol.for('UserController'),
 	UserService: Symbol.for('UserService'),

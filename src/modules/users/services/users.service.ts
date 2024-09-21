@@ -7,13 +7,16 @@ import { IUsersRepository } from '../repositories/users.repository.interface';
 import { IUserService } from './users.service.interface';
 import { TYPES } from '../../../types';
 import { IConfigService } from '../../../config/config.service.interface';
+import { IRedisService } from '../../../common/services/redis/redis.service.interface';
 
 @injectable()
 export class UserService implements IUserService {
 	constructor(
+		@inject(TYPES.RedisService) private redisService: IRedisService,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.UserRepository) private usersRepository: IUsersRepository,
 	) {}
+
 	async createUser({ email, name, password }: UserRegisterDto): Promise<UserModel | null> {
 		const newUser = new User(email, name);
 		const salt = this.configService.get('SALT');
@@ -36,5 +39,13 @@ export class UserService implements IUserService {
 
 	async getUserInfo(email: string): Promise<UserModel | null> {
 		return this.usersRepository.find(email);
+	}
+
+	async verifyEmailAndSaveUser(code: number): Promise<UserModel | null> {
+		const userFromRedis = await this.redisService.get(code.toString());
+		if (userFromRedis) {
+			return JSON.parse(userFromRedis);
+		}
+		return null;
 	}
 }

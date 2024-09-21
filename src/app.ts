@@ -9,11 +9,11 @@ import { IExeptionFilter } from './errors/exeption.filter.interface';
 import { PrismaClient } from '@prisma/client';
 import { CountriesController, ICountriesRepository } from './modules/countries';
 import { IUsersRepository, UserController } from './modules/users';
-import { AuthMiddleware } from './common/auth.middleware';
+import { AuthMiddleware } from './common/middlewares/auth.middleware';
 import { PrismaService } from './database/prisma.service';
 import 'reflect-metadata';
 import { CityController, ICityRepository } from './modules/cities';
-import { AuthGuard } from './common/auth.guard';
+import { AuthGuard } from './common/middlewares/auth.guard';
 
 @injectable()
 export class App {

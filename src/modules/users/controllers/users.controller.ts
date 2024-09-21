@@ -9,10 +9,10 @@ import { TYPES } from '../../../types';
 import { ILogger } from '../../../logger/logger.interface';
 import { IUserService } from '../services/users.service.interface';
 import { IConfigService } from '../../../config/config.service.interface';
-import { BaseController } from '../../../common/base.controller';
-import { ValidateMiddleware } from '../../../common/validate.middleware';
+import { BaseController } from '../../../common/baseController/base.controller';
+import { ValidateMiddleware } from '../../../common/middlewares/validate.middleware';
 import { HTTPError } from '../../../errors/http-error.class';
-import { AuthGuard } from '../../../common/auth.guard';
+import { AuthGuard } from '../../../common/middlewares/auth.guard';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -27,7 +27,6 @@ export class UserController extends BaseController implements IUserController {
 				path: '/register',
 				method: 'post',
 				func: this.register,
-				middlewares: [new ValidateMiddleware(UserRegisterDto)],
 			},
 			{
 				path: '/login',
@@ -40,6 +39,11 @@ export class UserController extends BaseController implements IUserController {
 				method: 'get',
 				func: this.info,
 				middlewares: [new AuthGuard()],
+			},
+			{
+				path: '/verifyEmail',
+				method: 'post',
+				func: this.verifyEmailAndSave,
 			},
 		]);
 	}
@@ -72,6 +76,22 @@ export class UserController extends BaseController implements IUserController {
 	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
 		const userInfo = await this.userService.getUserInfo(user);
 		this.ok(res, { email: userInfo?.email, id: userInfo?.id });
+	}
+
+	async verifyEmailAndSave(
+		{ body }: Request<{}, {}, { code: number }>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const user = await this.userService.verifyEmailAndSaveUser(body.code);
+
+		if (!user) {
+			this.send(res, 422, 'Code is invalid');
+			return;
+		}
+		const token = await this.signJWT(user.email, this.configService.get('SECRET'));
+		res.cookie('token', token);
+		this.ok(res, { user, token });
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {
