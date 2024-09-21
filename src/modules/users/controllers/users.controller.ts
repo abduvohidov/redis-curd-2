@@ -45,6 +45,11 @@ export class UserController extends BaseController implements IUserController {
 				method: 'post',
 				func: this.verifyEmailAndSave,
 			},
+			{
+				path: '/remove/:id',
+				method: 'delete',
+				func: this.remove,
+			},
 		]);
 	}
 
@@ -70,12 +75,24 @@ export class UserController extends BaseController implements IUserController {
 		if (!result) {
 			return next(new HTTPError(422, 'Такой пользователь уже существует'));
 		}
-		this.ok(res, { email: result.email, id: result.id });
+		this.ok(res, { email: result.email });
 	}
 
 	async info({ user }: Request, res: Response, next: NextFunction): Promise<void> {
 		const userInfo = await this.userService.getUserInfo(user);
 		this.ok(res, { email: userInfo?.email, id: userInfo?.id });
+	}
+
+	async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const { id } = req.params;
+		const result = await this.userService.remove(Number(id));
+		if (!result) {
+			return next(new HTTPError(422, 'Нет такой пользователь'));
+		}
+		this.ok(res, {
+			status: true,
+			message: 'пользователь успешно удалено',
+		});
 	}
 
 	async verifyEmailAndSave(

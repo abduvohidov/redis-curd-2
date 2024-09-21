@@ -35,6 +35,8 @@ import {
 import { PrismaService } from './database/prisma.service';
 import { RedisService } from './common/services/redis/redis.service';
 import { IRedisService } from './common/services/redis/redis.service.interface';
+import { IEmailService } from './common/services/email/email.service.interface';
+import { EmailService } from './common/services/email/email.service';
 
 export interface IBootstrapReturn {
 	appContainer: Container;
@@ -48,6 +50,7 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<PrismaClient>(TYPES.PrismaClient).toConstantValue(new PrismaClient());
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService);
 	bind<IRedisService>(TYPES.RedisService).to(RedisService);
+	bind<IEmailService>(TYPES.EmailService).to(EmailService);
 
 	bind<IUsersRepository>(TYPES.UserRepository).to(UsersRepository).inSingletonScope();
 	bind<IUserController>(TYPES.UserController).to(UserController).inSingletonScope();

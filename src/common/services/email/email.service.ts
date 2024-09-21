@@ -15,7 +15,7 @@ export class EmailService implements IEmailService {
 			port: 587,
 			secure: false,
 			auth: {
-				user: this.configService.get('SMTP_USER') as string,
+				user: this.configService.get('SMTP_USER'),
 				pass: this.configService.get('SMTP_PASS'),
 			},
 		};

@@ -9,11 +9,9 @@ import { IExeptionFilter } from './errors/exeption.filter.interface';
 import { PrismaClient } from '@prisma/client';
 import { CountriesController, ICountriesRepository } from './modules/countries';
 import { IUsersRepository, UserController } from './modules/users';
-import { AuthMiddleware } from './common/middlewares/auth.middleware';
 import { PrismaService } from './database/prisma.service';
 import 'reflect-metadata';
 import { CityController, ICityRepository } from './modules/cities';
-import { AuthGuard } from './common/middlewares/auth.guard';
 
 @injectable()
 export class App {
@@ -40,10 +38,6 @@ export class App {
 
 	useMiddleware(): void {
 		this.app.use(json());
-		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
-		const authGuard = new AuthGuard();
-		this.app.use(authMiddleware.execute.bind(authMiddleware));
-		this.app.use(authGuard.execute.bind(authGuard));
 	}
 
 	useRoutes(): void {
