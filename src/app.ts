@@ -13,6 +13,7 @@ import { AuthMiddleware } from './common/auth.middleware';
 import { PrismaService } from './database/prisma.service';
 import 'reflect-metadata';
 import { CityController, ICityRepository } from './modules/cities';
+import { AuthGuard } from './common/auth.guard';
 
 @injectable()
 export class App {
@@ -40,7 +41,9 @@ export class App {
 	useMiddleware(): void {
 		this.app.use(json());
 		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
+		const authGuard = new AuthGuard();
 		this.app.use(authMiddleware.execute.bind(authMiddleware));
+		this.app.use(authGuard.execute.bind(authGuard));
 	}
 
 	useRoutes(): void {
