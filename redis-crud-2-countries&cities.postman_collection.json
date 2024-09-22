@@ -1,0 +1,483 @@
+{
+	"info": {
+		"_postman_id": "73922044-d475-48b4-8e29-eb48916476c4",
+		"name": "redis-crud-2-countries&cities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28558820",
+		"_collection_link": "https://speeding-space-341953.postman.co/workspace/My-Workspace~3662f73f-cf47-4e58-8c96-af50addba72a/collection/28558820-73922044-d475-48b4-8e29-eb48916476c4?action=share&source=collection_link&creator=28558820"
+	},
+	"item": [
+		{
+			"name": "cities",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"city - 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/cities/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"cities",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"city-updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/cities/update/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"cities",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/cities/remove/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"cities",
+								"remove",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/cities/all",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"cities",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/cities/name/city - 1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"cities",
+								"name",
+								"city - 1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/cities/id/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"cities",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "countries",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"country-3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/countries/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"countries",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"countries-uipdated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/countries/update/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"countries",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/countries/remove/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"countries",
+								"remove",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/countries/all",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"countries",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/countries/id/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"countries",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/countries/name/country-1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"countries",
+								"name",
+								"country-1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"abduvohidov.abdullokh@gmail.com\",\n    \"password\": \"1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"abdullah\",\n    \"email\": \"abduvohidov.abdullokh@gmail.com\",\n    \"password\": \"1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"178918\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/verifyEmail",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"verifyEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/remove/3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"remove",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "{{authorization}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/info",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:9000",
+			"type": "string"
+		},
+		{
+			"key": "authorization",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjY5ODA2MTR9.m07M4Zb5TC4zBJsc5va2dHipOrt8LoAcfbJHaOgIx6Q",
+			"type": "string"
+		}
+	]
+}

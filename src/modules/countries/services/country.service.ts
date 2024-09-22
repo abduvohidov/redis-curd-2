@@ -7,21 +7,37 @@ import { CountriesCreateDto } from '../dto/country-create.dto';
 import { ICountriesEntity } from '../models/country.entity.interface';
 import { CountriesEntity } from '../models/country.entity';
 import { CountriesUpdateDto } from '../dto/country-update.dto';
+import { IRedisService } from '../../../common/services/redis/redis.service.interface';
 
 @injectable()
 export class CountriessService implements ICountriesService {
 	constructor(
+		@inject(TYPES.RedisService) private redisService: IRedisService,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.CountriesRepository) private CountriesRepository: ICountriesRepository,
 	) {}
 
+	private getRedisKey(id: number): string {
+		return `country_${id}`;
+	}
+
 	async createCountries(params: CountriesCreateDto): Promise<ICountriesEntity | null> {
-		const newCountries = new CountriesEntity(params.id, params.name);
 		const existedCountries = await this.CountriesRepository.findByName(params.name);
 		if (existedCountries) {
 			return null;
 		}
-		return await this.CountriesRepository.create(newCountries);
+
+		const newCountries = new CountriesEntity(params.id, params.name);
+		const createdCountry = await this.CountriesRepository.create(newCountries);
+
+		if (createdCountry) {
+			await this.redisService.set(
+				this.getRedisKey(createdCountry.id),
+				JSON.stringify(createdCountry),
+				1000,
+			);
+		}
+		return createdCountry;
 	}
 
 	async find(): Promise<ICountriesEntity[]> {
@@ -29,7 +45,16 @@ export class CountriessService implements ICountriesService {
 	}
 
 	async findById(id: number): Promise<ICountriesEntity | null> {
-		return await this.CountriesRepository.findById(id);
+		const cachedCountry = await this.redisService.get(this.getRedisKey(id));
+		if (cachedCountry) {
+			return JSON.parse(cachedCountry);
+		}
+
+		const country = await this.CountriesRepository.findById(id);
+		if (country) {
+			await this.redisService.set(this.getRedisKey(id), JSON.stringify(country), 1000);
+		}
+		return country;
 	}
 
 	async findByName(name: string): Promise<ICountriesEntity | null> {
@@ -42,7 +67,12 @@ export class CountriessService implements ICountriesService {
 			return null;
 		}
 
-		return await this.CountriesRepository.update(id, params);
+		const updatedCountry = await this.CountriesRepository.update(id, params);
+
+		if (updatedCountry) {
+			await this.redisService.set(this.getRedisKey(id), JSON.stringify(updatedCountry), 1000);
+		}
+		return updatedCountry;
 	}
 
 	async remove(id: number): Promise<ICountriesEntity | null> {
@@ -50,6 +80,8 @@ export class CountriessService implements ICountriesService {
 		if (!existedCountries) {
 			return null;
 		}
-		return await this.CountriesRepository.remove(id);
+
+		const removedCountry = await this.CountriesRepository.remove(id);
+		return removedCountry;
 	}
 }
