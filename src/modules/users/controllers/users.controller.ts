@@ -49,6 +49,7 @@ export class UserController extends BaseController implements IUserController {
 				path: '/remove/:id',
 				method: 'delete',
 				func: this.remove,
+				middlewares: [new AuthGuard()],
 			},
 		]);
 	}
